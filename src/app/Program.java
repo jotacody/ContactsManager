@@ -3,9 +3,6 @@ package app;
 import model.Contact;
 import model.ContactRepository;
 import model.db.DB;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Program {
@@ -15,7 +12,7 @@ public class Program {
 
         int n;
         do {
-            System.out.println("1 = insert, 2 = delete, 3 = updateName, 4 = updateEmail, 5 = updatePhone, 6 = quit ");
+            System.out.println("1 = insert, 2 = delete, 3 = update, 4 = quit ");
             n = sc.nextInt();
 
             switch (n){
@@ -41,36 +38,38 @@ public class Program {
                     cr.delete(id);
                     break;
                 case 3:
-                    System.out.print("Id: ");
-                    Integer idUpdate = sc.nextInt();
-                    System.out.print("New Name: ");
-                    sc.nextLine();
-                    String newName = sc.nextLine();
-                    cr.updateName(idUpdate,newName);
+                    System.out.println("1 = updateName, 2 = updateEmail, 3 = updatePhone");
+                    Integer n1 = sc.nextInt();
+
+                    if (n1 == 1) {
+                        System.out.print("Id: ");
+                        Integer idUpdate = sc.nextInt();
+                        System.out.print("New Name: ");
+                        sc.nextLine();
+                        String newName = sc.nextLine();
+                        cr.updateName(idUpdate,newName);
+                    } else if (n1 == 2) {
+                        System.out.print("Id: ");
+                        Integer idEmail = sc.nextInt();
+                        System.out.print("New Email: ");
+                        sc.nextLine();
+                        String newEmail = sc.nextLine();
+                        cr.updateEmail(idEmail, newEmail);
+                    } else {
+                        System.out.print("Id: ");
+                        Integer idPhone = sc.nextInt();
+                        System.out.print("New Phone: ");
+                        sc.nextLine();
+                        String newPhone = sc.nextLine();
+                        cr.updatePhone(idPhone, newPhone);
+                    }
                     break;
                 case 4:
-                    System.out.print("Id: ");
-                    Integer idEmail = sc.nextInt();
-                    System.out.print("New Email: ");
-                    sc.nextLine();
-                    String newEmail = sc.nextLine();
-                    cr.updateEmail(idEmail, newEmail);
-                    break;
-                case 5:
-                    System.out.print("Id: ");
-                    Integer idPhone = sc.nextInt();
-                    System.out.print("New Phone: ");
-                    sc.nextLine();
-                    String newPhone = sc.nextLine();
-                    cr.updatePhone(idPhone, newPhone);
-                    break;
-                case 6:
                     for (Contact c : cr.loadFromDb()){
                         System.out.println(c);
                     }
                     break;
-
-                }
+            }
 
         }while (n != 6);
 
