@@ -1,7 +1,9 @@
 package app;
 
+import model.dao.ContactDao;
+import model.db.DBException;
 import model.entities.Contact;
-import model.DAO.ContactDaoImpl;
+import model.dao.ContactDaoImpl;
 import model.db.DB;
 import java.util.Scanner;
 
@@ -35,11 +37,13 @@ public class Program {
                 case 2:
                     System.out.print("Id: ");
                     Integer id = sc.nextInt();
+                    cr.testId(id);
                     cr.delete(id);
                     break;
                 case 3:
                     System.out.print("Id: ");
                     Integer idUpdate = sc.nextInt();
+                    cr.testId(idUpdate);
                     System.out.print("Name: ");
                     sc.nextLine();
                     String nameUpdate = sc.nextLine();
@@ -56,7 +60,7 @@ public class Program {
                     break;
             }
 
-        }while (n != 6);
+        }while (n != 4);
 
         sc.close();
         DB.closeConnection();

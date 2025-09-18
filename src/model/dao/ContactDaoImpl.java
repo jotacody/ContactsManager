@@ -1,4 +1,4 @@
-package model.DAO;
+package model.dao;
 
 import model.entities.Contact;
 import model.db.DB;
@@ -69,7 +69,6 @@ public class ContactDaoImpl implements ContactDao {
 
     public void update(Integer id, String name, String email, String phone){
         PreparedStatement st = null;
-
         try {
             st = conn.prepareStatement(
                     "UPDATE contact SET name=?, email=?, phone=? WHERE id=?"
@@ -110,5 +109,17 @@ public class ContactDaoImpl implements ContactDao {
         }
 
         return list;
+    }
+
+    public void testId(Integer id){
+        int cont = 0;
+        for (Contact c : listAll()){
+            if (c.getId().equals(id)){
+                cont++;
+            }
+        }
+        if (cont == 0){
+            throw new DBException("There is no contact with this id!");
+        }
     }
 }
