@@ -66,7 +66,18 @@ public class ContactRepository {
     }
 
     public void delete(Integer id){
-        list.removeIf(t -> t.getId().equals(id));
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "DELETE FROM contact\n" +
+                            "WHERE id = ?;"
+            );
+            st.setInt(1, id);
+
+            st.executeUpdate();
+        } catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
     }
 
     public void updateName(Integer id, String s){

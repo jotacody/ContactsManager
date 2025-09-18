@@ -40,7 +40,6 @@ public class Program {
                     System.out.print("Id: ");
                     Integer id = sc.nextInt();
                     cr.delete(id);
-                    System.out.println(cr.getList());
                     break;
                 case 3:
                     System.out.print("Id: ");
