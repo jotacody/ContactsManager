@@ -1,5 +1,6 @@
-package model;
+package model.DAO;
 
+import model.entities.Contact;
 import model.db.DB;
 import model.db.DBException;
 
@@ -7,10 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactRepository {
+public class ContactDaoImpl implements ContactDao {
     private Connection conn;
 
-    public ContactRepository(Connection conn) {
+    public ContactDaoImpl(Connection conn) {
         this.conn = conn;
     }
 
@@ -66,17 +67,17 @@ public class ContactRepository {
         }
     }
 
-    public void updateName(Integer id, String s){
+    public void update(Integer id, String name, String email, String phone){
         PreparedStatement st = null;
 
         try {
             st = conn.prepareStatement(
-                    "UPDATE contact " +
-                            "SET name = ? " +
-                            "WHERE id = ?;"
+                    "UPDATE contact SET name=?, email=?, phone=? WHERE id=?"
             );
-            st.setString(1, s);
-            st.setInt(2, id);
+            st.setString(1 , name);
+            st.setString(2 , email);
+            st.setString(3 , phone);
+            st.setInt(4, id);
             st.executeUpdate();
         }catch (SQLException e){
             throw new DBException(e.getMessage());
@@ -85,45 +86,7 @@ public class ContactRepository {
         }
     }
 
-    public void updateEmail(Integer id, String s){
-        PreparedStatement st = null;
-
-        try {
-            st = conn.prepareStatement(
-                    "UPDATE contact " +
-                            "SET email = ? " +
-                            "WHERE id = ?;"
-            );
-            st.setString(1, s);
-            st.setInt(2, id);
-            st.executeUpdate();
-        }catch (SQLException e){
-            throw new DBException(e.getMessage());
-        }finally {
-            DB.closeStatement(st);
-        }
-    }
-
-    public void updatePhone(Integer id, String s){
-        PreparedStatement st = null;
-
-        try {
-            st = conn.prepareStatement(
-                    "UPDATE contact " +
-                            "SET phone = ? " +
-                            "WHERE id = ?;"
-            );
-            st.setString(1, s);
-            st.setInt(2, id);
-            st.executeUpdate();
-        }catch (SQLException e){
-            throw new DBException(e.getMessage());
-        } finally {
-            DB.closeStatement(st);
-        }
-    }
-
-    public List<Contact> loadFromDb(){
+    public List<Contact> listAll(){
         List<Contact> list = new ArrayList<>();
         PreparedStatement st = null;
         ResultSet rs = null;

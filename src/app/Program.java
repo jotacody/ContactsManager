@@ -1,14 +1,14 @@
 package app;
 
-import model.Contact;
-import model.ContactRepository;
+import model.entities.Contact;
+import model.DAO.ContactDaoImpl;
 import model.db.DB;
 import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ContactRepository cr = new ContactRepository(DB.getConnection());
+        ContactDaoImpl cr = new ContactDaoImpl(DB.getConnection());
 
         int n;
         do {
@@ -38,34 +38,19 @@ public class Program {
                     cr.delete(id);
                     break;
                 case 3:
-                    System.out.println("1 = updateName, 2 = updateEmail, 3 = updatePhone");
-                    Integer n1 = sc.nextInt();
-
-                    if (n1 == 1) {
-                        System.out.print("Id: ");
-                        Integer idUpdate = sc.nextInt();
-                        System.out.print("New Name: ");
-                        sc.nextLine();
-                        String newName = sc.nextLine();
-                        cr.updateName(idUpdate,newName);
-                    } else if (n1 == 2) {
-                        System.out.print("Id: ");
-                        Integer idEmail = sc.nextInt();
-                        System.out.print("New Email: ");
-                        sc.nextLine();
-                        String newEmail = sc.nextLine();
-                        cr.updateEmail(idEmail, newEmail);
-                    } else {
-                        System.out.print("Id: ");
-                        Integer idPhone = sc.nextInt();
-                        System.out.print("New Phone: ");
-                        sc.nextLine();
-                        String newPhone = sc.nextLine();
-                        cr.updatePhone(idPhone, newPhone);
-                    }
+                    System.out.print("Id: ");
+                    Integer idUpdate = sc.nextInt();
+                    System.out.print("Name: ");
+                    sc.nextLine();
+                    String nameUpdate = sc.nextLine();
+                    System.out.print("Email: ");
+                    String emailUpdate = sc.nextLine();
+                    System.out.print("Phone: ");
+                    String phoneUpdate = sc.nextLine();
+                    cr.update(idUpdate, nameUpdate, emailUpdate, phoneUpdate);
                     break;
                 case 4:
-                    for (Contact c : cr.loadFromDb()){
+                    for (Contact c : cr.listAll()){
                         System.out.println(c);
                     }
                     break;
