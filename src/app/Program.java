@@ -11,8 +11,7 @@ import java.util.Scanner;
 public class Program {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        DB db = null;
-        ContactRepository cr = new ContactRepository(db.getConnection());
+        ContactRepository cr = new ContactRepository(DB.getConnection());
 
         int n;
         do {
@@ -48,7 +47,6 @@ public class Program {
                     sc.nextLine();
                     String newName = sc.nextLine();
                     cr.updateName(idUpdate,newName);
-                    System.out.println(cr.getList());
                     break;
                 case 4:
                     System.out.print("Id: ");
@@ -57,7 +55,6 @@ public class Program {
                     sc.nextLine();
                     String newEmail = sc.nextLine();
                     cr.updateEmail(idEmail, newEmail);
-                    System.out.println(cr.getList());
                     break;
                 case 5:
                     System.out.print("Id: ");
@@ -66,14 +63,19 @@ public class Program {
                     sc.nextLine();
                     String newPhone = sc.nextLine();
                     cr.updatePhone(idPhone, newPhone);
-                    System.out.println(cr.getList());
                     break;
                 case 6:
+                    for (Contact c : cr.loadFromDb()){
+                        System.out.println(c);
+                    }
                     break;
 
                 }
 
         }while (n != 6);
+
+        sc.close();
+        DB.closeConnection();
 
     }
 }

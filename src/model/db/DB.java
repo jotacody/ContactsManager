@@ -1,9 +1,6 @@
 package model.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DB {
     private static Connection conn = null;
@@ -44,6 +41,32 @@ public class DB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void closeStatement(PreparedStatement st){
+
+        if (st != null){
+            try {
+                st.close();
+            }catch (SQLException e){
+                throw new DBException(e.getMessage());
+            }
+
+        }
+
+    }
+
+    public static void closeResultSet(ResultSet rs){
+
+        if (rs != null){
+            try {
+                rs.close();
+            }catch (SQLException e){
+                throw new DBException(e.getMessage());
+            }
+
+        }
+
     }
 
 }

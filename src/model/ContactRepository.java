@@ -8,29 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactRepository {
-    List<Contact> list = new ArrayList<>();
     private Connection conn;
 
     public ContactRepository(Connection conn) {
         this.conn = conn;
-    }
-
-    public List<Contact> getList() {
-        return list;
-    }
-
-    public void setList(List<Contact> list) {
-        this.list = list;
-    }
-
-    public Integer newId(){
-        Integer newId = 1;
-        for (Contact c : list){
-            if (c.getId().equals(newId)){
-                newId++;
-            }
-        }
-        return newId;
     }
 
     public void insert(Contact c){
@@ -62,6 +43,9 @@ public class ContactRepository {
 
         } catch (SQLException e){
             throw new DBException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
 
@@ -77,6 +61,8 @@ public class ContactRepository {
             st.executeUpdate();
         } catch (SQLException e){
             throw new DBException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
         }
     }
 
@@ -94,6 +80,8 @@ public class ContactRepository {
             st.executeUpdate();
         }catch (SQLException e){
             throw new DBException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
         }
     }
 
@@ -111,6 +99,8 @@ public class ContactRepository {
             st.executeUpdate();
         }catch (SQLException e){
             throw new DBException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
         }
     }
 
@@ -128,6 +118,34 @@ public class ContactRepository {
             st.executeUpdate();
         }catch (SQLException e){
             throw new DBException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
         }
+    }
+
+    public List<Contact> loadFromDb(){
+        List<Contact> list = new ArrayList<>();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement("SELECT * FROM contact");
+            rs = st.executeQuery();
+
+            while (rs.next()){
+                Contact c = new Contact();
+
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setEmail(rs.getString("email"));
+                c.setPhone(rs.getString("phone"));
+
+                list.add(c);
+            }
+        } catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
+
+        return list;
     }
 }
