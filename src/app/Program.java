@@ -46,8 +46,8 @@ public class Program {
                     Integer idUpdate = sc.nextInt();
                     System.out.print("New Name: ");
                     sc.nextLine();
-                    String nName = sc.nextLine();
-                    cr.updateName(idUpdate,nName);
+                    String newName = sc.nextLine();
+                    cr.updateName(idUpdate,newName);
                     System.out.println(cr.getList());
                     break;
                 case 4:

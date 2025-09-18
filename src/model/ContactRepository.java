@@ -81,26 +81,53 @@ public class ContactRepository {
     }
 
     public void updateName(Integer id, String s){
-        for (Contact c : list){
-            if (c.getId().equals(id)){
-                c.setName(s);
-            }
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE contact " +
+                            "SET name = ? " +
+                            "WHERE id = ?;"
+            );
+            st.setString(1, s);
+            st.setInt(2, id);
+            st.executeUpdate();
+        }catch (SQLException e){
+            throw new DBException(e.getMessage());
         }
     }
 
     public void updateEmail(Integer id, String s){
-        for (Contact c : list){
-            if (c.getId().equals(id)){
-                c.setEmail(s);
-            }
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE contact " +
+                            "SET email = ? " +
+                            "WHERE id = ?;"
+            );
+            st.setString(1, s);
+            st.setInt(2, id);
+            st.executeUpdate();
+        }catch (SQLException e){
+            throw new DBException(e.getMessage());
         }
     }
 
     public void updatePhone(Integer id, String s){
-        for (Contact c : list){
-            if (c.getId().equals(id)){
-                c.setPhone(s);
-            }
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE contact " +
+                            "SET phone = ? " +
+                            "WHERE id = ?;"
+            );
+            st.setString(1, s);
+            st.setInt(2, id);
+            st.executeUpdate();
+        }catch (SQLException e){
+            throw new DBException(e.getMessage());
         }
     }
 }
