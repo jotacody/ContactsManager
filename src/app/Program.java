@@ -2,6 +2,7 @@ package app;
 
 import model.Contact;
 import model.ContactRepository;
+import model.db.DB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.Scanner;
 public class Program {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ContactRepository cr = new ContactRepository();
+        DB db = null;
+        ContactRepository cr = new ContactRepository(db.getConnection());
 
         int n;
         do {
@@ -29,12 +31,10 @@ public class Program {
                     System.out.print("Phone: ");
                     String phone = sc.nextLine();
 
-                    Integer idInsert = cr.newId();
 
-                    Contact contact = new Contact(idInsert, name, email, phone);
+                    Contact contact = new Contact(name, email, phone);
                     cr.insert(contact);
                     System.out.println("Contact added successfully (ID: " + contact.getId() + ")");
-                    System.out.println(cr.getList());
                     break;
                 case 2:
                     System.out.print("Id: ");

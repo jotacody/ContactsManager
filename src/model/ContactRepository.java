@@ -1,10 +1,19 @@
 package model;
 
+import model.db.DB;
+import model.db.DBException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactRepository {
     List<Contact> list = new ArrayList<>();
+    private Connection conn;
+
+    public ContactRepository(Connection conn) {
+        this.conn = conn;
+    }
 
     public List<Contact> getList() {
         return list;
@@ -25,7 +34,35 @@ public class ContactRepository {
     }
 
     public void insert(Contact c){
-        list.add(c);
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement(
+                    "INSERT INTO contact " +
+                            "(name, email, phone ) " +
+                            "VALUES " +
+                            "(?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            st.setString(1, c.getName());
+            st.setString(2, c.getEmail());
+            st.setString(3, c.getPhone());
+
+            int row = st.executeUpdate();
+            rs = st.getGeneratedKeys();
+
+            if (row > 0){
+                if (rs.next()){
+                    int id = rs.getInt(1);
+                    c.setId(id);
+                }
+            }
+
+
+        } catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
     }
 
     public void delete(Integer id){
