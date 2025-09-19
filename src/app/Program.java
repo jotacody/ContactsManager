@@ -12,7 +12,16 @@ public class Program {
 
         int n;
         do {
-            System.out.println("\n1 = insert, 2 = delete, 3 = update, 4 = Search Contact, 5 = quit ");
+            System.out.print(
+                    "\n1) Add contact\n" +
+                            "2) Delete contact\n" +
+                            "3) Update contact\n" +
+                            "4) Search contact\n" +
+                            "5) List contact\n" +
+                            "0) Quit\n" +
+                            "> "
+
+                    );
             n = sc.nextInt();
 
             switch (n){
@@ -52,7 +61,7 @@ public class Program {
                     cr.update(idUpdate, nameUpdate, emailUpdate, phoneUpdate);
                     break;
                 case 4:
-                    System.out.println("Id, Name, Email or Phone:");
+                    System.out.println("Name, Email or Phone:");
                     sc.nextLine();
                     String search = sc.nextLine();
                     System.out.println(cr.searchContact(cr.listAll(), search));
@@ -64,7 +73,7 @@ public class Program {
                     break;
             }
 
-        }while (n != 5);
+        }while (n != 0);
 
         sc.close();
         DB.closeConnection();

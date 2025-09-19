@@ -113,7 +113,7 @@ public class ContactDaoImpl implements ContactDao {
 
     public Contact searchContact(List<Contact> list, String s){
         for (Contact c : list) {
-            if (c.getName().equals(s) || c.getEmail().equals(s) || c.getPhone().equals(s) || c.getId().equals(Integer.valueOf(s))) {
+            if (c.getName().equals(s) || c.getEmail().equals(s) || c.getPhone().equals(s)) {
                 return c;
             }
         }
