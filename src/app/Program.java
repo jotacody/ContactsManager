@@ -1,7 +1,5 @@
 package app;
 
-import model.dao.ContactDao;
-import model.db.DBException;
 import model.entities.Contact;
 import model.dao.ContactDaoImpl;
 import model.db.DB;
@@ -14,7 +12,7 @@ public class Program {
 
         int n;
         do {
-            System.out.println("1 = insert, 2 = delete, 3 = update, 4 = quit ");
+            System.out.println("\n1 = insert, 2 = delete, 3 = update, 4 = Search Contact, 5 = quit ");
             n = sc.nextInt();
 
             switch (n){
@@ -54,13 +52,19 @@ public class Program {
                     cr.update(idUpdate, nameUpdate, emailUpdate, phoneUpdate);
                     break;
                 case 4:
+                    System.out.println("Id, Name, Email or Phone:");
+                    sc.nextLine();
+                    String search = sc.nextLine();
+                    System.out.println(cr.searchContact(cr.listAll(), search));
+                    break;
+                case 5:
                     for (Contact c : cr.listAll()){
                         System.out.println(c);
                     }
                     break;
             }
 
-        }while (n != 4);
+        }while (n != 5);
 
         sc.close();
         DB.closeConnection();

@@ -91,7 +91,7 @@ public class ContactDaoImpl implements ContactDao {
         ResultSet rs = null;
 
         try {
-            st = conn.prepareStatement("SELECT * FROM contact");
+            st = conn.prepareStatement("SELECT * FROM contact ORDER BY name ASC; ");
             rs = st.executeQuery();
 
             while (rs.next()){
@@ -109,6 +109,15 @@ public class ContactDaoImpl implements ContactDao {
         }
 
         return list;
+    }
+
+    public Contact searchContact(List<Contact> list, String s){
+        for (Contact c : list) {
+            if (c.getName().equals(s) || c.getEmail().equals(s) || c.getPhone().equals(s) || c.getId().equals(Integer.valueOf(s))) {
+                return c;
+            }
+        }
+        throw new RuntimeException("There is no contact with that name, email or phone!");
     }
 
     public void testId(Integer id){
