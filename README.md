@@ -20,6 +20,9 @@
 
 ## 🧰 Features
 
+- 🗂️ Menu
+  <img width="226" height="154" alt="image" src="https://github.com/user-attachments/assets/e3eaff29-72a1-4ca2-895d-23aa9f1e5705" />
+
 - 📋 List all contacts  
   <img width="871" height="108" alt="image" src="https://github.com/user-attachments/assets/7df0cbc2-cc9d-4254-8dfd-45e1cc400566" />
 
